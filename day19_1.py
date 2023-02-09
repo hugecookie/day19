@@ -1,24 +1,18 @@
-from tkinter import *
+def score_sort(ary):
+    n = len(ary)
+    for end in range(1, n):
+        for cur in range(end, 0, -1):
+            if ary[cur - 1][1] > ary[cur][1]:
+                ary[cur - 1], ary[cur] = ary[cur], ary[cur - 1]
+    return ary
 
 
-def drawTriangle(x, y, size):
-    if size >= 30:
-        drawTriangle(x, y, size / 2)
-        drawTriangle(x + size / 2, y, size / 2)
-        drawTriangle(x + size / 4, int(y - size * (3 ** 0.5) / 4), size / 2)
-    else:
-        canvas.create_polygon(x, y, x + size, y, x + size / 2, y - size * (3 ** 0.5) / 2, fill='red', outline="red")
+scoreAry = [['A', 88], ['B', 99], ['C', 71], ['D', 78], ['E', 67], ['F', 92]]
 
+print('before sort -->', scoreAry)
+scoreAry = score_sort(scoreAry)
+print('after sort -->', scoreAry)
 
-wSize = 1000
-radius = 400
-
-
-window = Tk()
-window.title("triangle fractal")
-canvas = Canvas(window, height=wSize, width=wSize, bg='white')
-
-drawTriangle(wSize / 5, wSize / 5 * 4, wSize * 2 / 3)
-
-canvas.pack()
-window.mainloop()
+print('## Score ##')
+for i in range(len(scoreAry) // 2):
+    print(scoreAry[i][0], ':', scoreAry[len(scoreAry) - 1 - i][0])
