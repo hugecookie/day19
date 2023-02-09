@@ -2,17 +2,16 @@ import random
 import time
 
 
-def selection_sort(ary):
+def bubble_sort(ary):
     n = len(ary)
-    for i in range(0, n - 1):
-        min_idx = i
-        for k in range(i + 1, n):
-            if ary[min_idx] > ary[k]:
-                min_idx = k
-        tmp = ary[i]
-        ary[i] = ary[min_idx]
-        ary[min_idx] = tmp
-
+    for end in range(n - 1, 0, -1):
+        change_YN = False
+        for cur in range(0, end):
+            if ary[cur] > ary[cur + 1]:
+                ary[cur], ary[cur + 1] = ary[cur + 1], ary[cur]
+                change_YN = True
+        if not change_YN:
+            break
     return ary
 
 
@@ -39,26 +38,27 @@ def qsort(arr, start, end):
     qsort(arr, mid, end)
 
 
-def quick_sort(ary):
+def quickSort(ary):
     qsort(ary, 0, len(ary) - 1)
 
 
-countAry = [1000, 10000, 12000, 15000]
+tempAry = [random.randint(10000, 99999) for _ in range(1000000)]
+tempAry.sort()
 
-for count in countAry:
-    tempAry = [random.randint(10000, 99999) for _ in range(count)]
-    selectAry = tempAry[:]
-    quickAry = tempAry[:]
+rndPos = random.randint(0, len(tempAry) - 1)
+print(f'data number : {len(tempAry)}')
+print(f'place : {rndPos}')
+tempAry.insert(rndPos, tempAry[-1])
 
-    print(f'data number {count}')
-    start = time.time()
-    selection_sort(selectAry)
-    end = time.time()
-    print(f' selection number {end - start}')
-    start = time.time()
-    quick_sort(selectAry)
-    end = time.time()
-    print(f' quick number {end - start}')
-    print()
+bubbleAry = tempAry[:]
+quickAry = tempAry[:]
 
-    count *= 5
+start = time.time()
+bubble_sort(bubbleAry)
+end = time.time()
+print(f' bubble sort : {end - start}')
+
+start = time.time()
+quickSort(quickAry)
+end = time.time()
+print(f' quick sort : {end - start}')
